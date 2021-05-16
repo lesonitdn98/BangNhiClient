@@ -1,0 +1,54 @@
+<div class="card mt-4 note-content">
+    <div class="card-header row">
+        <div class="title-notes">
+            <div class="user-select row">
+                <div class="title">
+                    <span for="sel1">Select user:</span>
+                </div>
+                <div class="content">
+                    <select class="form-control" id="sel1" name="sellist1">
+                        <option>All</option>
+                        <option>Bang Nhi</option>
+                        <option>Son Le</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="title-content row">
+            <div class="title" *ngIf="currentNote">
+                <h4 class ="align-baseline">{{currentNote.title}}</h4>
+            </div>
+            <div class="search">
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            </div>
+        </div>
+    </div>
+    <div class="card-body row">
+        <div class="notes" *ngIf="currentNote">
+            <ul class="list-group list-group-flush seclect" id="myList" *ngIf="notes">
+                <li class="option" *ngFor="let note of notes" (click)="setCurrentNote(note)" [ngClass]="{'option-selected': currentNote === note }">
+                    <div class="note-title"><b class="text-dark text-title">{{note.title}}</b></div>
+                    <i class="text-muted text-date">{{note.date}}</i><br>
+                    <span class="text-secondary text-author">{{note.user.fullName}}</span><br>
+                </li>
+            </ul>
+            <div class="wrapper new">
+                <div class="button">
+                    <div class="icon"><i class="fa fa-plus"></i></div>
+                    <span>New Note</span>
+                </div>
+            </div>
+        </div>
+        <div class="content" *ngIf="currentNote">
+            <div class="form-group">
+                <textarea class="form-control" rows="115" id="comment" [value]="currentNote.description"></textarea>
+            </div>
+            <div class="wrapper remove">
+                <div class="button">
+                    <div class="icon"><i class="fa fa-trash"></i></div>
+                    <span>Remove</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
