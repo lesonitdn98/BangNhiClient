@@ -6,25 +6,25 @@
                     <span for="sel1">Select user:</span>
                 </div>
                 <div class="content">
-                    <select class="form-control" id="sel1" name="sellist1" *ngIf="users">
-                        <option (click)="getAllNotes()">All</option>
-                        <option *ngFor="let user of users">{{user.fullName}}</option>
+                    <select class="form-control" id="sel1" name="sellist1" #us (change)="callTypeUserId(us.value)" [(ngModel)]="selectedUser">
+                        <option (click)="getAllNotes()" [value]="-1">All</option>
+                        <option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="title-content row">
             <div class="title">
-                <h4 class ="align-baseline" *ngIf="currentNote">{{currentNote.title}}&nbsp;&nbsp;<i class="icon fa fa-pen-square"></i></h4>
+                <h4 class ="align-baseline" *ngIf="currentNote">{{currentNote.title}}&nbsp;&nbsp;<img class="icon-edit" *ngIf="user.id === currentNote.user.id" src="../../assets/edit.png" alt="edit" (click)="editTitle(content)"></h4>
             </div>
             <div class="search">
-                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <input class="form-control" id="myInput" type="text" placeholder="Search.." (keyup)="onSearch($event)">
             </div>
         </div>
     </div>
     <div class="card-body row">
         <div class="notes">
-            <ul class="list-group list-group-flush seclect" id="myList" *ngIf="notes">
+            <ul class="list-group list-group-flush seclect" id="myList" *ngIf="notes?.length">
                 <li class="option" *ngFor="let note of notes" (click)="setCurrentNote(note)" [ngClass]="{'option-selected': currentNote === note }">
                     <div class="note-title"><b class="text-dark text-title">{{note.title}}</b></div>
                     <i class="text-muted text-date">{{note.date}}</i><br>
@@ -32,7 +32,7 @@
                 </li>
             </ul>
             <div class="wrapper new">
-                <div class="button" (click)="addNewNote()">
+                <div class="button btn-new" (click)="addNewNote()">
                     <div class="icon"><i class="fa fa-plus"></i></div>
                     <span>New Note</span>
                 </div>
@@ -40,14 +40,37 @@
         </div>
         <div class="content">
             <div class="form-group">
-                <textarea class="form-control" rows="115" id="comment"  *ngIf="currentNote" [value]="currentNote.description"></textarea>
+                <textarea class="form-control" rows="115" id="comment"  *ngIf="currentNote" [(ngModel)]="currentDescription" (keyup)="onDescription($event)"></textarea>
             </div>
             <div class="wrapper remove" *ngIf="user.id === currentNote.user.id">
-                <div class="button" (click)="removeNote()">
+                <div class="button btn-save" (click)="saveNote()" *ngIf="currentNote.description != currentDescription">
+                    <div class="icon"><i class="fa fa-save"></i></div>
+                    <span>Save</span>
+                </div>
+                <div class="button btn-remove" (click)="removeNote()">
                     <div class="icon"><i class="fa fa-trash"></i></div>
                     <span>Remove</span>
                 </div>
             </div>
         </div>
     </div>
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Update Note</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="title">Note's Title</label>
+              <div class="input-group">
+                <input id="title" class="form-control" placeholder="title" [value]="currentNote.title" (keyup)="onTitle($event)" maxlength="50">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        </div>
+      </ng-template>
 </div>

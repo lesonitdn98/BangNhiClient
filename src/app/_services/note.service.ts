@@ -18,8 +18,26 @@ export class NoteService {
             }));
     }
 
+    getNotesByUser(userId: string) {
+        return this.http.get<any>(`${environment.apiUrl}/notes/user?userId=${encodeURIComponent(userId)}`)
+            .pipe(map(response => {
+                if (response.ok) {
+                    return response.data;
+                }
+            }));
+    }
+
     newNote(title: string, description: string) {
-        return this.http.post<any>(`${environment.apiUrl}/notes/add?title=${title}&description=${description}`, null)
+        return this.http.post<any>(`${environment.apiUrl}/notes/add?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`, null)
+            .pipe(map(response => {
+                if (response.ok) {
+                    return response.data;
+                }
+            }));
+    }
+
+    updateNote(note: Note, newTitle: string, newDescription: string) {
+        return this.http.post<any>(`${environment.apiUrl}/notes/edit?noteId=${encodeURIComponent(note.id)}&title=${encodeURIComponent(newTitle)}&description=${encodeURIComponent(newDescription)}`, null)
             .pipe(map(response => {
                 if (response.ok) {
                     return response.data;
@@ -28,11 +46,22 @@ export class NoteService {
     }
 
     removeNote(note: Note) {
-        return this.http.post<any>(`${environment.apiUrl}/notes/remove?noteId=${note.id}`, null)
+        return this.http.post<any>(`${environment.apiUrl}/notes/remove?noteId=${encodeURIComponent(note.id)}`, null)
             .pipe(map(response => {
                 if (response.ok) {
                     return response.data;
                 }
-            }));
+            }
+        ));
+    }
+
+    searchNote(keyword: string) {
+        return this.http.get<any>(`${environment.apiUrl}/notes/search?keyword=${encodeURIComponent(keyword)}`)
+            .pipe(map(response => {
+                if (response.ok) {
+                    return response.data;
+                }
+            }
+        ));
     }
 }

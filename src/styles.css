@@ -106,6 +106,17 @@ select:focus
     transform: translateY(-50%);
 }
 
+.icon-edit {
+    height: 16px;
+    width: 16px;
+    top: -2px;
+    position: relative;
+}
+
+.icon-edit:hover {
+    background-color: rgba(0,0,0,.125);
+}
+
 /* title-notes */
 
 .title-notes {
@@ -249,8 +260,20 @@ select {
     background-color: white;
 }
 
-.wrapper .button:hover {
+.wrapper .btn-new:hover {
     width: 120px;
+    background-color: #ffbe76;
+    color: white;
+}
+
+.wrapper .btn-remove:hover {
+    width: 110px;
+    background-color: #ffbe76;
+    color: white;
+}
+
+.wrapper .btn-save:hover {
+    width: 90px;
     background-color: #ffbe76;
     color: white;
 }
