@@ -1,9 +1,22 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
-      <a class="nav-item nav-link" routerLink="/note">Note</a>
-      <a class="nav-item nav-link" style="cursor: pointer;" (click)="logout()">Logout</a>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" *ngIf="user">
+  <a class="navbar-brand" href="#">Bang Nhi</a>
+  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+      aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavId">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/note">Note</a>
+      </li>
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <a class="nav-item my-sm-0" style="cursor: pointer;color: aliceblue;" (click)="logout()">Logout</a>
+    </div>
   </div>
 </nav>
 
